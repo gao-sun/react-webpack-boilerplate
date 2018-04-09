@@ -6,7 +6,11 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const dirs = require('./dir.config');
 
-module.exports = {
+module.exports = (env, argv) => ({
+	mode: argv.mode === 'production' ? argv.mode : 'development',
+	devServer: {
+		contentBase: './dist'
+	},
 	output: {
 		path: dirs.dist_dir.main,
 		filename: 'js/[name].[hash].js'
@@ -51,4 +55,4 @@ module.exports = {
 			append: false
 		})
 	]
-};
+});
