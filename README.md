@@ -8,8 +8,8 @@ React v16 + React Router v4 + Webpack v4 + Sass
 
 ## How-to
 
-- Build Dll (do it first): `npm run build-dll`
-- Development build (with watch): `npm run dev`
+- Dev(w/ hot loader): `npm run dev`
+
 - Build: `npm run build`
 
 ## Tips
