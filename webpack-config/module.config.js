@@ -1,7 +1,7 @@
 const dirs = require('./dir.config');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-module.exports = {
+module.exports = (env, argv) => ({
 	rules: [
 		{
 			test: /\.js$/,
@@ -10,23 +10,51 @@ module.exports = {
 				{
 					loader: 'babel-loader',
 					query: {
-						presets: [ 'react', 'env' ]
+						presets: [ 'react', ['env', {
+							targets: {
+								browsers: 'last 2 Chrome versions'
+							}
+						}] ],
+						plugins: [
+							'transform-decorators-legacy',
+							'transform-class-properties',
+							'transform-object-rest-spread',
+							'react-hot-loader/babel'
+						]
 					}
 				}
 			]
 		},
 		{
 			test: /\.scss$/,
-			loader: ExtractTextPlugin.extract(
-				{
-					fallback: 'style-loader',
-					use: [
-						'css-loader',
-						'sass-loader'
-					],
-					publicPath: dirs.src_dir.assets
-				}
-			)
+			loader: argv.mode === 'production' ?
+				ExtractTextPlugin.extract(
+					{
+						fallback: 'style-loader',
+						use: [
+							{ loader: 'css-loader', options: { minimize: true } },
+							'sass-loader'
+						],
+						publicPath: dirs.src_dir.assets
+					}
+				)
+			:
+				['style-loader', 'css-loader', 'sass-loader']
+		},
+		{
+			test: /\.css$/,
+			loader: argv.mode === 'production' ?
+				ExtractTextPlugin.extract(
+					{
+						fallback: 'style-loader',
+						use: [
+							{ loader: 'css-loader', options: { minimize: true } }
+						],
+						publicPath: dirs.src_dir.assets
+					}
+				)
+			:
+				['style-loader', 'css-loader']
 		},
 		{
 			test: /\.(jpe?g|gif|png|svg)$/,
@@ -36,10 +64,10 @@ module.exports = {
 					options: {
 						name: 'images/[hash].[ext]',
 						outputPath: 'assets',
-						publicPath: '/assets'
+						publicPath: '../assets'
 					}
 				} 
 			]
 		}
 	]
-};
+});

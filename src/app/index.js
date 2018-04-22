@@ -10,7 +10,4 @@ const App = () =>
 	</Router>
 ;
 
-ReactDOM.render(
-	<App />,
-	document.getElementById('app')
-);
+export default DEV ? require('react-hot-loader').hot(module)(App) : App;

@@ -4,7 +4,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const dirs = require('./dir.config');
 
-module.exports = {
+module.exports = (env, argv) => ({
 	output: {
 		path: dirs.dist_dir.js,
 		filename: '[name].[hash].js',
@@ -13,7 +13,7 @@ module.exports = {
 	entry: {
 		vendors: ['react', 'react-dom', 'react-router-dom']
 	},
-	module: require('./module.config'),
+	module: require('./module.config')(env, argv),
 	plugins: [
 		new webpack.DllPlugin({
 			path: 'manifest.json',
@@ -28,4 +28,4 @@ module.exports = {
 		}),
 		new ExtractTextPlugin('css/[name].[contenthash].css'),
 	]
-};
+});
