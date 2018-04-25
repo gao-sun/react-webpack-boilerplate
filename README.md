@@ -9,7 +9,6 @@ React v16 + React Router v4 + Webpack v4 + Sass
 ## How-to
 
 - Dev(w/ hot loader): `npm run dev`
-
 - Build: `npm run build`
 
 ## Tips
