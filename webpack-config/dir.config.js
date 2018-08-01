@@ -7,8 +7,10 @@ module.exports = {
 	root_dir: root_dir,
 	src_dir: {
 		main: src_dir,
+		foundations: src_dir + '/foundations',
 		app: src_dir + '/app',
 		components: src_dir + '/app/components',
+		services: src_dir + '/app/services',
 		scss: src_dir + '/scss',
 		assets: src_dir + '/assets'
 	},
